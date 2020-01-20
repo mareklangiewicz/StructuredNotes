@@ -1,12 +1,13 @@
-package pl.mareklangiewicz.structurednotes
+package pl.mareklangiewicz.notes
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import splitties.views.dsl.core.setContentView
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(MainUi(this))
     }
 }
