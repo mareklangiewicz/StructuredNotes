@@ -1,5 +1,3 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
     repositories {
         google()
@@ -7,7 +5,7 @@ buildscript {
         
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.0.0-alpha08")
+        classpath("com.android.tools.build:gradle:4.0.0-alpha09")
         classpath(Deps.kotlinGradlePlugin)
     }
 }

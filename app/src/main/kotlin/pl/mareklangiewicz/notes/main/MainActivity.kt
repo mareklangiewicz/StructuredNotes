@@ -1,4 +1,4 @@
-package pl.mareklangiewicz.notes
+package pl.mareklangiewicz.notes.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

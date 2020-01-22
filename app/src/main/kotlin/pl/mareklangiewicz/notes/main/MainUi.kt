@@ -1,4 +1,4 @@
-package pl.mareklangiewicz.notes
+package pl.mareklangiewicz.notes.main
 
 import android.annotation.SuppressLint
 import android.content.Context

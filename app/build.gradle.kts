@@ -16,7 +16,6 @@ android {
 }
 
 dependencies {
-    implementation(Deps.kotlinStdlib8)
     implementation(project(":logic"))
     implementation(project(":widgets"))
 }
