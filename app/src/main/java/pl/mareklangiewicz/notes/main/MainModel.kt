@@ -27,6 +27,7 @@ class MainModel : MainModelContract {
     private val scope = MainScope()
 
     init {
+        log("MainModel.init")
 
         actionS
             .logOnNext(LogLevel.DEBUG, "action")
@@ -37,7 +38,6 @@ class MainModel : MainModelContract {
             .logOnNext(LogLevel.DEBUG, "screen")
             .subscribeForever()
 
-        log("MainModel.init")
         scope.launch { MainLogic(actionS, state) }
     }
 }
