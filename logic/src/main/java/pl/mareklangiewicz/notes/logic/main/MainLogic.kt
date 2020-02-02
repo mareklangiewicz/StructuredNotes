@@ -11,6 +11,6 @@ suspend fun MainLogic(
     state: MainState
 ) {
     state.screenS put Screen.Splash
-    delay(500)
+    delay(2000)
     LoginLogic(actionS.ofType(), state.login, state.screenS)
 }

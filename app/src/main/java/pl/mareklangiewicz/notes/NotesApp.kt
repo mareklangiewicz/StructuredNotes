@@ -5,8 +5,8 @@ import android.util.Log
 import pl.mareklangiewicz.common.LogLevel
 import pl.mareklangiewicz.common.Logger
 import pl.mareklangiewicz.common.memoize
-import pl.mareklangiewicz.common.DI as CommonDI
 import pl.mareklangiewicz.notes.main.MainModel
+import pl.mareklangiewicz.common.DI as CommonDI
 
 class NotesApp : Application() {
 

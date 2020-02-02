@@ -4,10 +4,12 @@ import io.reactivex.Observable
 import io.reactivex.functions.Consumer
 import kotlinx.coroutines.rx2.awaitFirst
 import pl.mareklangiewicz.common.put
+import pl.mareklangiewicz.notes.logic.main.Back
+import pl.mareklangiewicz.notes.logic.main.MainAction
 import pl.mareklangiewicz.notes.logic.main.Screen
 
 suspend fun LoginLogic(
-    actionS: Observable<LoginAction>,
+    actionS: Observable<MainAction>,
     state: LoginState,
     screenS: Consumer<Screen>
 ) {
@@ -24,6 +26,7 @@ suspend fun LoginLogic(
             is LoginAction.ChangeName -> state.nameS put action.name
             is LoginAction.ChangePass -> state.passS put action.pass
             LoginAction.Login -> break@loop
+            Back -> return // false or sth..
         }
     }
 }

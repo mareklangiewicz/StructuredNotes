@@ -15,6 +15,7 @@ android {
 }
 
 dependencies {
-    implementation(Deps.kotlinStdlib8)
+    api(project(":common"))
     api(Deps.splitties)
+    api(Deps.rxandroid)
 }

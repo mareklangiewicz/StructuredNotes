@@ -8,7 +8,9 @@ import pl.mareklangiewicz.common.LogLevel
 import pl.mareklangiewicz.common.log
 import pl.mareklangiewicz.common.logOnNext
 import pl.mareklangiewicz.common.subscribeForever
-import pl.mareklangiewicz.notes.logic.main.*
+import pl.mareklangiewicz.notes.logic.main.MainAction
+import pl.mareklangiewicz.notes.logic.main.MainLogic
+import pl.mareklangiewicz.notes.logic.main.MainState
 
 interface MainModelContract {
     val state: MainState
