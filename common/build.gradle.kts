@@ -11,7 +11,7 @@ dependencies {
     api(kotlin("reflect"))
     api(Deps.kotlinxCoroutinesCore)
     api(Deps.kotlinxCoroutinesRx2)
-    api(Deps.rxjava)
+    api(Deps.rxjava2)
     api(Deps.rxkotlin)
     api(Deps.rxrelay)
 }

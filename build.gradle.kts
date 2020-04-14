@@ -5,7 +5,7 @@ buildscript {
         
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.0.0-alpha09")
+        classpath("com.android.tools.build:gradle:4.1.0-alpha05")
         classpath(Deps.kotlinGradlePlugin)
     }
 }
