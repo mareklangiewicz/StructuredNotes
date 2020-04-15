@@ -33,11 +33,11 @@ class MainModel : MainModelContract {
             .logOnNext(LogLevel.DEBUG, "action")
             .subscribeForever()
 
-        state.screenS
+        state.commonS.screenS
             .distinctUntilChanged()
             .logOnNext(LogLevel.DEBUG, "screen")
             .subscribeForever()
 
-        scope.launch { MainLogic(actionS, state) }
+        scope.launch { state.MainLogic(actionS) }
     }
 }

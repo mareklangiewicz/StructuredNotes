@@ -9,8 +9,8 @@ android {
         applicationId = "pl.mareklangiewicz.notes"
         minSdkVersion(Vers.androidMinSdk)
         targetSdkVersion(Vers.androidTargetSdk)
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "0.02"
     }
 }
 

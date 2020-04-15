@@ -18,9 +18,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(MainUi(this).apply { bindUntil(destroyS, model) })
-        model.state.screenS
+        model.state.commonS.screenS
             .skip(1)
-            .filter { it == Screen.None }
+            .filter { it == Screen.Empty }
             .subscribeUntil(destroyS) { finish() }
     }
 

@@ -48,7 +48,7 @@ class PlaygroundUi(override val ctx: Context) : Ui {
     override val root = sandboxUi.root.wrapInScrollView()
 
     fun <U> bindUntil(untilS: ObservableSource<U>, model: MainModelContract) {
-        model.state.screenS.subscribeUntil(untilS) { sandboxUi.title.text = "current screen: $it" }
+        model.state.commonS.screenS.subscribeUntil(untilS) { sandboxUi.title.text = "current screen: $it" }
     }
 }
 

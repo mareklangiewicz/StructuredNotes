@@ -12,10 +12,10 @@ abstract class ScreenUi<UiContract : Ui>(protected val ui: UiContract) : Ui by u
 }
 
 fun Context.createScreenUi(screen: Screen) = when(screen) {
+    Screen.Empty -> null
     Screen.Splash -> SplashScreenUi(this)
     Screen.Register -> null // TODO
     Screen.Login -> LoginScreenUi(this)
     Screen.Home -> null // TODO
     Screen.Settings -> null // TODO
-    Screen.None -> null
 }
