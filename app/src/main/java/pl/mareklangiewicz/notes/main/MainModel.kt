@@ -7,18 +7,18 @@ import kotlinx.coroutines.launch
 import pl.mareklangiewicz.common.*
 import pl.mareklangiewicz.notes.logic.main.MainAction
 import pl.mareklangiewicz.notes.logic.main.MainCommand
-import pl.mareklangiewicz.notes.logic.main.MainLogic
+import pl.mareklangiewicz.notes.logic.main.logic
 import pl.mareklangiewicz.notes.logic.main.MainState
 
 interface MainModelContract {
-    val state: MainState
+    val mainS: MainState
     val actionS: Consumer<MainAction>
     val commandS: Observable<MainCommand>
 }
 
 class MainModel : MainModelContract {
 
-    override val state = MainState()
+    override val mainS = MainState()
 
     override val actionS = createBus<MainAction>()
 
@@ -34,11 +34,11 @@ class MainModel : MainModelContract {
             .logOnNext(LogLevel.DEBUG, "action")
             .subscribeForever()
 
-        state.commonS.screenS
+        mainS.commonS.screenS
             .distinctUntilChanged()
             .logOnNext(LogLevel.DEBUG, "screen")
             .subscribeForever()
 
-        scope.launch { state.MainLogic(actionS, commandS) }
+        scope.launch { mainS.logic(actionS, commandS) }
     }
 }

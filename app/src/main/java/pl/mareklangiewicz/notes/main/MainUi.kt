@@ -13,7 +13,6 @@ import androidx.core.view.isVisible
 import pl.mareklangiewicz.common.getValue
 import pl.mareklangiewicz.common.setValue
 import pl.mareklangiewicz.notes.widgets.progressBar
-import android.util.AttributeSet
 import pl.mareklangiewicz.notes.widgets.debounceUi
 import splitties.views.generateViewId
 
@@ -38,11 +37,11 @@ class MainUi(override val ctx: Context) : Ui {
 
     fun <U> bindUntil(untilS: Observable<U>, model: MainModelContract) {
 
-        model.state.commonS.isInProgressS
+        model.mainS.commonS.isInProgressS
             .debounceUi()
             .subscribeUntil(untilS) { isInProgress = it }
 
-        val screenS = model.state.commonS.screenS
+        val screenS = model.mainS.commonS.screenS
             .distinctUntilChanged()
 
         screenS

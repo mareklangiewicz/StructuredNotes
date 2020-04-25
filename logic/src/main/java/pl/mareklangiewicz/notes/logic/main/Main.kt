@@ -29,7 +29,7 @@ class CommonState {
     val isInProgressS = createState(false)
 }
 
-suspend fun MainState.MainLogic(
+suspend fun MainState.logic(
     actionS: Observable<MainAction>,
     commandS: Consumer<MainCommand>
 ) = commonS.screenS.withS(Screen.Splash) {
