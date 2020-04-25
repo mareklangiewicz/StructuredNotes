@@ -12,6 +12,10 @@ android {
         versionCode = 2
         versionName = "0.02"
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {

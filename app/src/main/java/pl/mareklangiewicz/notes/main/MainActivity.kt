@@ -11,9 +11,7 @@ import pl.mareklangiewicz.common.put
 import pl.mareklangiewicz.common.subscribeUntil
 import pl.mareklangiewicz.notes.DI
 import pl.mareklangiewicz.notes.logic.main.Back
-import pl.mareklangiewicz.notes.logic.main.MainCommand
 import pl.mareklangiewicz.notes.logic.main.MainCommand.*
-import pl.mareklangiewicz.notes.logic.main.Screen
 import splitties.toast.toast
 import splitties.views.dsl.core.setContentView
 

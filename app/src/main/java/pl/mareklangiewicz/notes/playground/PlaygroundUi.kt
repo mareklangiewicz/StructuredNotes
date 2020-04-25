@@ -2,19 +2,18 @@ package pl.mareklangiewicz.notes.playground
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayout
-import io.reactivex.Observable
-import pl.mareklangiewicz.common.subscribeUntil
 import pl.mareklangiewicz.notes.logic.main.Screen
-import pl.mareklangiewicz.notes.main.MainModelContract
 import pl.mareklangiewicz.notes.main.createScreenUi
 import pl.mareklangiewicz.sandboxui.SandboxUi
 import pl.mareklangiewicz.sandboxui.sandbox
 import splitties.dimensions.dip
+import splitties.views.backgroundColor
 import splitties.views.dsl.core.Ui
 import splitties.views.dsl.core.wrapInScrollView
 
@@ -34,6 +33,7 @@ class PlaygroundUi(override val ctx: Context) : Ui {
         for (screen in Screen.values()) {
             val screenUi = ctx.createScreenUi(screen) ?: continue
             val screenBox = sandbox(screen.name) {
+                inbox.backgroundColor = Color.DKGRAY
                 on(ctx.dip(260), ctx.dip(400)) lay screenUi.root
                 action(" \u21d0 ") { screenUi.updateFlexLayout { width -= ctx.dip(8) } }
                 action(" \u21d2 ") { screenUi.updateFlexLayout { width += ctx.dip(8) } }
@@ -46,10 +46,6 @@ class PlaygroundUi(override val ctx: Context) : Ui {
     }
 
     override val root = sandboxUi.root.wrapInScrollView()
-
-    fun <U> bindUntil(untilS: Observable<U>, model: MainModelContract) {
-        model.state.commonS.screenS.subscribeUntil(untilS) { sandboxUi.title.text = "current screen: $it" }
-    }
 }
 
 private fun Ui.updateFlexLayout(block: FlexboxLayout.LayoutParams.() -> Unit) = root.updateLayoutParams(block)

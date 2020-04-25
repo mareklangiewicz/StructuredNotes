@@ -2,7 +2,6 @@ package pl.mareklangiewicz.notes.logic.main
 
 import io.reactivex.Observable
 import io.reactivex.functions.Consumer
-import io.reactivex.rxkotlin.ofType
 import kotlinx.coroutines.delay
 import pl.mareklangiewicz.common.createState
 import pl.mareklangiewicz.common.put
