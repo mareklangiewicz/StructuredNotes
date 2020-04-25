@@ -8,12 +8,16 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.core.text.parseAsHtml
 import androidx.core.view.isVisible
+import com.jakewharton.rxbinding3.widget.textChanges
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import pl.mareklangiewicz.sandboxui.sandbox
 import splitties.dimensions.dip
 import splitties.dimensions.dp
 import splitties.views.dsl.core.*
 import splitties.views.dsl.core.styles.AndroidStyles
 import splitties.views.gravityCenter
+import java.util.concurrent.TimeUnit
 
 fun <V: View> V.addV(
     layout: LinearLayout,
@@ -91,6 +95,18 @@ var EditText.hintRes: Int?
 
 fun Ui.dip(value: Int) = ctx.dip(value)
 fun Ui.dp(value: Int) = ctx.dp(value)
+
+fun <T> Observable<T>.debounceUi(delayMs: Int = 200): Observable<T> =
+    debounce(delayMs.toLong(), TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+
+@Suppress("MagicNumber")
+val EditText.changeS: Observable<String>
+    get() = textChanges()
+        .skipInitialValue()
+        .map { it.toString() }
+        .debounceUi(20)
+        .distinctUntilChanged()
+        .share()
 
 
 fun Ui.progressBar(android: AndroidStyles = AndroidStyles(ctx)) = frameLayout {

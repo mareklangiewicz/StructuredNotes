@@ -2,14 +2,13 @@ package pl.mareklangiewicz.notes.logic.main.login
 
 import io.reactivex.Observable
 import io.reactivex.functions.Consumer
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.rx2.awaitFirst
 import pl.mareklangiewicz.common.createState
 import pl.mareklangiewicz.common.put
 import pl.mareklangiewicz.common.withS
-import pl.mareklangiewicz.notes.logic.main.Back
-import pl.mareklangiewicz.notes.logic.main.CommonState
-import pl.mareklangiewicz.notes.logic.main.MainAction
-import pl.mareklangiewicz.notes.logic.main.Screen
+import pl.mareklangiewicz.notes.logic.main.*
+import pl.mareklangiewicz.notes.logic.main.MainCommand.*
 
 sealed class LoginAction : MainAction {
     data class ChangeName(val name: String) : LoginAction()
@@ -26,7 +25,15 @@ class LoginState(val commonS: CommonState = CommonState()) {
     val passErrorS = createState("")
 }
 
-suspend fun LoginState.LoginLogic(actionS: Observable<MainAction>) = commonS.screenS.withS(Screen.Login) {
+suspend fun LoginState.logic(
+    actionS: Observable<MainAction>,
+    commandS: Consumer<MainCommand>
+) = commonS.screenS.withS(Screen.Login) {
+
+    commandS put Hint("Let's translate something to polish")
+    delay(1000)
+    commandS put LaunchUrl("https://translate.google.pl/#view=home&op=translate&sl=en&tl=pl&text=something")
+
     nameS put ""
     nameHintS put "Your fake name"
     nameErrorS put ""
@@ -39,7 +46,7 @@ suspend fun LoginState.LoginLogic(actionS: Observable<MainAction>) = commonS.scr
             is LoginAction.ChangeName -> nameS put action.name
             is LoginAction.ChangePass -> passS put action.pass
             LoginAction.Login -> break@loop
-            Back -> return // false or sth..
+            Back -> break@loop // false or sth..
         }
     }
 }

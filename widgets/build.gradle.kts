@@ -16,6 +16,7 @@ android {
 dependencies {
     api(project(":common"))
     api(Deps.rxandroid)
+    api(Deps.rxbinding)
     api(Deps.splitties)
     api(Deps.recyclerui)
     api(Deps.sandboxui)

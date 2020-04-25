@@ -7,7 +7,7 @@ import androidx.core.view.updateLayoutParams
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayout
-import io.reactivex.ObservableSource
+import io.reactivex.Observable
 import pl.mareklangiewicz.common.subscribeUntil
 import pl.mareklangiewicz.notes.logic.main.Screen
 import pl.mareklangiewicz.notes.main.MainModelContract
@@ -47,7 +47,7 @@ class PlaygroundUi(override val ctx: Context) : Ui {
 
     override val root = sandboxUi.root.wrapInScrollView()
 
-    fun <U> bindUntil(untilS: ObservableSource<U>, model: MainModelContract) {
+    fun <U> bindUntil(untilS: Observable<U>, model: MainModelContract) {
         model.state.commonS.screenS.subscribeUntil(untilS) { sandboxUi.title.text = "current screen: $it" }
     }
 }

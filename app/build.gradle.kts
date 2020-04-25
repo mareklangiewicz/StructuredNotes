@@ -17,4 +17,5 @@ android {
 dependencies {
     implementation(project(":logic"))
     implementation(project(":widgets"))
+    implementation(Deps.androidxBrowser)
 }

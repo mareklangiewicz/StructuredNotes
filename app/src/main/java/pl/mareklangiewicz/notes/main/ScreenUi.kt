@@ -1,14 +1,14 @@
 package pl.mareklangiewicz.notes.main
 
 import android.content.Context
-import io.reactivex.ObservableSource
+import io.reactivex.Observable
 import pl.mareklangiewicz.notes.logic.main.Screen
 import pl.mareklangiewicz.notes.main.login.LoginScreenUi
 import pl.mareklangiewicz.notes.main.splash.SplashScreenUi
 import splitties.views.dsl.core.Ui
 
 abstract class ScreenUi<UiContract : Ui>(protected val ui: UiContract) : Ui by ui {
-    open fun <U> bindUntil(untilS: ObservableSource<U>, model: MainModelContract) = Unit
+    open fun <U> bindUntil(untilS: Observable<U>, model: MainModelContract) = Unit
 }
 
 fun Context.createScreenUi(screen: Screen) = when(screen) {

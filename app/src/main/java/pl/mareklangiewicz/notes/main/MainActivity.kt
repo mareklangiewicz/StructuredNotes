@@ -1,27 +1,35 @@
 package pl.mareklangiewicz.notes.main
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.jakewharton.rxrelay2.PublishRelay
+import androidx.browser.customtabs.CustomTabsIntent
+import pl.mareklangiewicz.common.Bus
 import pl.mareklangiewicz.common.put
 import pl.mareklangiewicz.common.subscribeUntil
 import pl.mareklangiewicz.notes.DI
 import pl.mareklangiewicz.notes.logic.main.Back
+import pl.mareklangiewicz.notes.logic.main.MainCommand
+import pl.mareklangiewicz.notes.logic.main.MainCommand.*
 import pl.mareklangiewicz.notes.logic.main.Screen
+import splitties.toast.toast
 import splitties.views.dsl.core.setContentView
 
 class MainActivity : AppCompatActivity() {
 
     private val model = DI.provideMainModel()
-    private val destroyS = PublishRelay.create<Unit>()
+    private val destroyS = Bus.create<Unit>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(MainUi(this).apply { bindUntil(destroyS, model) })
-        model.state.commonS.screenS
-            .skip(1)
-            .filter { it == Screen.Empty }
-            .subscribeUntil(destroyS) { finish() }
+        model.commandS.subscribeUntil(destroyS) { when (it) {
+            is Hint -> toast(it.message)
+            is LaunchUrl -> launchUrl(it.url)
+            Finish -> finish()
+        } }
     }
 
     override fun onDestroy() {
@@ -31,3 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() = model.actionS put Back
 }
+
+private fun Context.launchUrl(url: String) =
+    try { CustomTabsIntent.Builder().build().launchUrl(this, Uri.parse(url)) }
+    catch (_: ActivityNotFoundException) { toast("Can not open $url") }
