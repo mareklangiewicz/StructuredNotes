@@ -9,6 +9,7 @@ import pl.mareklangiewicz.common.put
 import pl.mareklangiewicz.common.withS
 import pl.mareklangiewicz.notes.logic.main.*
 import pl.mareklangiewicz.notes.logic.main.MainCommand.*
+import pl.mareklangiewicz.notes.logic.main.login.LoginAction.*
 
 sealed class LoginAction : MainAction {
     data class ChangeName(val name: String) : LoginAction()
@@ -29,11 +30,6 @@ suspend fun LoginState.logic(
     actionS: Observable<MainAction>,
     commandS: Consumer<MainCommand>
 ) = commonS.screenS.withS(Screen.Login) {
-
-    commandS put Hint("Let's translate something to polish")
-    delay(1000)
-    commandS put LaunchUrl("https://translate.google.pl/#view=home&op=translate&sl=en&tl=pl&text=something")
-
     nameS put ""
     nameHintS put "Your fake name"
     nameErrorS put ""
@@ -43,10 +39,33 @@ suspend fun LoginState.logic(
     // TODO: funny logic with hints and errors
     loop@ while (true) {
         when (val action = actionS.awaitFirst()) {
-            is LoginAction.ChangeName -> nameS put action.name
-            is LoginAction.ChangePass -> passS put action.pass
-            LoginAction.Login -> break@loop
-            Back -> break@loop // false or sth..
+            is ChangeName -> {
+                nameS put action.name
+                nameErrorS put when {
+                    action.name.toLowerCase() == "marek" -> "You're not ${action.name}! I'm Marek!"
+                    action.name.length < 4 -> "Your fake name \"${action.name}\" is too short"
+                    else -> ""
+                }
+            }
+            is ChangePass -> {
+                passS put action.pass
+                passErrorS put when {
+                    action.pass.length < 8 -> "Password has to have at least 8 characters"
+                    action.pass.all { it.isLetterOrDigit() } -> "Password has to contain special characters"
+                    action.pass.none { it.isLetter() } -> "Password has to contain letters"
+                    action.pass.none { it.isDigit() } -> "Password has to contain digits"
+                    action.pass.none { it.isUpperCase() } -> "Password has to contain upper case characters"
+                    action.pass.none { it.isLowerCase() } -> "Password has to contain lower case characters"
+                    else -> ""
+                }
+            }
+            Login -> {
+                commandS put Hint("Let's share your fake password with google translator :)")
+                delay(500)
+                commandS put LaunchUrl("https://translate.google.pl/#view=home&op=translate&sl=en&tl=pl&text=${passS.value}")
+                break@loop
+            }
+            Back -> break@loop
         }
     }
 }

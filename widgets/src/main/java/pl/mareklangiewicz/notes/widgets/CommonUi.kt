@@ -7,10 +7,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.core.text.parseAsHtml
+import androidx.core.text.toHtml
 import androidx.core.view.isVisible
+import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import pl.mareklangiewicz.common.unsupportedGet
 import pl.mareklangiewicz.sandboxui.sandbox
 import splitties.dimensions.dip
 import splitties.dimensions.dp
@@ -77,21 +80,46 @@ var Ui.isVisible: Boolean
     get() = root.isVisible
     set(value) { root.isVisible = value }
 
-fun CharSequence?.containsHtml() = this != null && Regex("<.+>").containsMatchIn(this)
-
-var TextView.txt: CharSequence
-    get() = text ?: ""
+var TextView.html: String
+    get() = editableText?.toHtml() ?: text?.toString() ?: ""
     set(value) {
-        text = if (value.containsHtml()) value.toString().parseAsHtml() else value
+        text = value.parseAsHtml()
+    }
+
+var TextView.htmlRes: Int?
+    get() = unsupportedGet
+    set(@StringRes value) { html = value?.let { context.getString(it) } ?: "" }
+
+var TextView.txt: String
+    get() = text?.toString() ?: ""
+    set(value) {
+        if (txt != value) text = value
     }
 
 var TextView.txtRes: Int?
-    get() = null
-    set(@StringRes value) { txt = value?.let { context.getText(it) } ?: "" }
+    get() = unsupportedGet
+    set(@StringRes value) { txt = value?.let { context.getString(it) } ?: "" }
 
-var EditText.hintRes: Int?
-    get() = null
-    set(@StringRes value) { hint = value?.let { context.getText(it) } ?: "" }
+var TextView.hnt: String
+    get() = hint?.toString() ?: ""
+    set(value) {
+        if (hnt != value) hint = value
+    }
+
+var TextView.hntRes: Int?
+    get() = unsupportedGet
+    set(@StringRes value) { hnt = value?.let { context.getString(it) } ?: "" }
+
+var TextView.err: String
+    get() = error?.toString() ?: ""
+    set(value) {
+        if (err != value) error = value
+    }
+
+var EditText.errRes: Int?
+    get() = unsupportedGet
+    set(@StringRes value) { err = value?.let { context.getString(it) } ?: "" }
+
 
 fun Ui.dip(value: Int) = ctx.dip(value)
 fun Ui.dp(value: Int) = ctx.dp(value)
@@ -107,6 +135,8 @@ val EditText.changeS: Observable<String>
         .debounceUi(20)
         .distinctUntilChanged()
         .share()
+
+val View.clickS: Observable<Unit> get() = clicks().share()
 
 
 fun Ui.progressBar(android: AndroidStyles = AndroidStyles(ctx)) = frameLayout {

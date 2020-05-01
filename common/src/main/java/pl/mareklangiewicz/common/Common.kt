@@ -12,6 +12,8 @@ import kotlin.contracts.contract
 @Suppress("unused")
 val <T> T.unit get() = Unit
 
+val unsupportedGet: Nothing get() = throw UnsupportedOperationException("Unsupported get")
+
 /** Short string representation of any object */
 val <T> T.str get() =
     if (this === null) "null"
@@ -44,7 +46,6 @@ inline fun <S, R> State<S>.withS(state: S, block: () -> R): R {
 
 fun <T> createBus(): Bus<T> = Bus.create()
 fun <T> createState(value: T): State<T> = State.createDefault(value)
-fun createState(value: String): State<CharSequence> = State.createDefault(value)
 
 @Suppress("CheckResult")
 fun <T> Observable<T>.subscribeForever(onNext: (T) -> Unit = {}) {

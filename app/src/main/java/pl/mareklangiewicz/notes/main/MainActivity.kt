@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import pl.mareklangiewicz.common.Bus
+import pl.mareklangiewicz.common.createBus
 import pl.mareklangiewicz.common.put
 import pl.mareklangiewicz.common.subscribeUntil
 import pl.mareklangiewicz.notes.DI
@@ -18,7 +19,7 @@ import splitties.views.dsl.core.setContentView
 class MainActivity : AppCompatActivity() {
 
     private val model = DI.provideMainModel()
-    private val destroyS = Bus.create<Unit>()
+    private val destroyS = createBus<Unit>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

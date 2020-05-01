@@ -21,7 +21,7 @@ class MainState(val commonS: CommonState = CommonState()) {
 sealed class MainCommand {
     object Finish : MainCommand()
     data class LaunchUrl(val url: String) : MainCommand()
-    data class Hint(val message: CharSequence) : MainCommand()
+    data class Hint(val message: String) : MainCommand()
 }
 
 class CommonState {

@@ -41,9 +41,13 @@ fun <T : Any> Observable<T>.logOnComplete(level: LogLevel = INFO, message: Strin
 fun <T: Any> Observable<T>.logOnSubscribe(level: LogLevel = INFO, message: String = "subscribe"): Observable<T> =
     doOnSubscribe { log(message, level) }
 
+fun <T: Any> Observable<T>.logOnDispose(level: LogLevel = INFO, message: String = "dispose"): Observable<T> =
+    doOnDispose { log(message, level) }
+
 fun <T: Any> Observable<T>.logOnAny(level: LogLevel = INFO, prefix: String = "") = this
     .logOnSubscribe(level, "$prefix subscribe")
-    .logOnError(level, prefix)
+    .logOnDispose(level, "$prefix dispose")
     .logOnComplete(level, "$prefix complete")
+    .logOnError(level, prefix)
     .logOnNext(level, prefix)
 

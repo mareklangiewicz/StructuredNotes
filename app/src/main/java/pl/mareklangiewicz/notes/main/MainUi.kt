@@ -43,6 +43,7 @@ class MainUi(override val ctx: Context) : Ui {
 
         val screenS = model.mainS.commonS.screenS
             .distinctUntilChanged()
+            .share()
 
         screenS
             .debounceUi(100)
