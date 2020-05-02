@@ -15,7 +15,7 @@ import splitties.views.InputType
 import splitties.views.padding
 import splitties.views.type
 
-class LoginScreenUi(ctx: Context) : ScreenUi<LoginUi>(LoginUi(ctx)) {
+class LoginScreenUi(ctx: Context) : ScreenUi<LoginUiContract>(LoginUi(ctx)) {
 
     override fun <U> bindUntil(untilS: Observable<U>, model: MainModelContract) {
 
@@ -36,29 +36,41 @@ class LoginScreenUi(ctx: Context) : ScreenUi<LoginUi>(LoginUi(ctx)) {
     }
 }
 
+interface LoginUiContract : Ui {
+    var name: String
+    var pass: String
+    var nameHint: String
+    var passHint: String
+    var nameError: String
+    var passError: String
+    val nameChangeS: Observable<String>
+    val passChangeS: Observable<String>
+    val loginClickS: Observable<Unit>
+}
+
 @Suppress("EXPERIMENTAL_API_USAGE")
-class LoginUi(override val ctx: Context) : Ui {
+class LoginUi(override val ctx: Context) : LoginUiContract {
 
     override val root = verticalLayout { padding = dip(32) }
 
     private val material = MaterialComponentsStyles(ctx)
 
-    private val nameEditText = editText().addV(root, 32)
+    private val nameEditText = editText { type = InputType.personName }.addV(root, 32)
 
     private val passEditText = editText { type = InputType.password }.addV(root, 32)
 
     private val loginButton = material.button.filled { text = "Login" }.addV(root, 32)
 
-    var name by nameEditText::txt
-    var pass by passEditText::txt
-    var nameHint by nameEditText::hnt
-    var passHint by passEditText::hnt
-    var nameError by nameEditText::err
-    var passError by passEditText::err
+    override var name by nameEditText::txt
+    override var pass by passEditText::txt
+    override var nameHint by nameEditText::hnt
+    override var passHint by passEditText::hnt
+    override var nameError by nameEditText::err
+    override var passError by passEditText::err
 
-    val nameChangeS = nameEditText.changeS
-    val passChangeS = passEditText.changeS
-    val loginClickS = loginButton.clickS
+    override val nameChangeS = nameEditText.changeS
+    override val passChangeS = passEditText.changeS
+    override val loginClickS = loginButton.clickS
 }
 
 @Suppress("unused") private class LoginPreview(ctx: Context) : UiFrame(LoginScreenUi(ctx))

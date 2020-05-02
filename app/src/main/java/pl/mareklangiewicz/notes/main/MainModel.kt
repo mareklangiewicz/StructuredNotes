@@ -10,6 +10,7 @@ import pl.mareklangiewicz.notes.logic.main.MainAction
 import pl.mareklangiewicz.notes.logic.main.MainCommand
 import pl.mareklangiewicz.notes.logic.main.logic
 import pl.mareklangiewicz.notes.logic.main.MainState
+import pl.mareklangiewicz.notes.notifier.AndroNotifier
 
 interface MainModelContract {
     val mainS: MainState
@@ -40,6 +41,8 @@ class MainModel : MainModelContract {
             .logOnNext(DEBUG, "screen")
             .subscribeForever()
 
-        scope.launch { mainS.logic(actionS, commandS) }
+        val notify = AndroNotifier()
+
+        scope.launch { mainS.logic(actionS, commandS, notify) }
     }
 }

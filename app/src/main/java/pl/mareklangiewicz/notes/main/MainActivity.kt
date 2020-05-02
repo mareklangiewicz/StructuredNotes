@@ -6,10 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
-import pl.mareklangiewicz.common.Bus
-import pl.mareklangiewicz.common.createBus
-import pl.mareklangiewicz.common.put
-import pl.mareklangiewicz.common.subscribeUntil
+import pl.mareklangiewicz.common.*
 import pl.mareklangiewicz.notes.DI
 import pl.mareklangiewicz.notes.logic.main.Back
 import pl.mareklangiewicz.notes.logic.main.MainCommand.*
@@ -23,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DI.provideMainActivity = { this }
         setContentView(MainUi(this).apply { bindUntil(destroyS, model) })
         model.commandS.subscribeUntil(destroyS) { when (it) {
             is Hint -> toast(it.message)
@@ -33,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         destroyS put Unit
+        if(DI.provideMainActivity() == this) DI.provideMainActivity = { null }
         super.onDestroy()
     }
 

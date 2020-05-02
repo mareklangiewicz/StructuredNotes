@@ -4,12 +4,14 @@ import io.reactivex.Observable
 import io.reactivex.functions.Consumer
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.rx2.awaitFirst
+import pl.mareklangiewicz.common.V
 import pl.mareklangiewicz.common.createState
 import pl.mareklangiewicz.common.put
 import pl.mareklangiewicz.common.withS
 import pl.mareklangiewicz.notes.logic.main.*
 import pl.mareklangiewicz.notes.logic.main.MainCommand.*
 import pl.mareklangiewicz.notes.logic.main.login.LoginAction.*
+import pl.mareklangiewicz.notes.logic.main.notifier.Notifier
 
 sealed class LoginAction : MainAction {
     data class ChangeName(val name: String) : LoginAction()
@@ -28,7 +30,8 @@ class LoginState(val commonS: CommonState = CommonState()) {
 
 suspend fun LoginState.logic(
     actionS: Observable<MainAction>,
-    commandS: Consumer<MainCommand>
+    commandS: Consumer<MainCommand>,
+    notify: Notifier
 ) = commonS.screenS.withS(Screen.Login) {
     nameS put ""
     nameHintS put "Your fake name"
@@ -36,7 +39,6 @@ suspend fun LoginState.logic(
     passS put ""
     passHintS put "Your fake password"
     passErrorS put ""
-    // TODO: funny logic with hints and errors
     loop@ while (true) {
         when (val action = actionS.awaitFirst()) {
             is ChangeName -> {
@@ -59,11 +61,15 @@ suspend fun LoginState.logic(
                     else -> ""
                 }
             }
-            Login -> {
-                commandS put Hint("Let's share your fake password with google translator :)")
-                delay(500)
-                commandS put LaunchUrl("https://translate.google.pl/#view=home&op=translate&sl=en&tl=pl&text=${passS.value}")
-                break@loop
+            Login -> when {
+                nameErrorS.V.isNotEmpty() -> commandS put Hint("Please enter correct fake name first")
+                passErrorS.V.isNotEmpty() -> commandS put Hint("Please enter correct fake password first")
+                else -> {
+                    notify("Let's share your fake password with google translator :)") ?: continue@loop
+                    delay(500)
+                    commandS put LaunchUrl("https://translate.google.pl/#view=home&op=translate&sl=en&tl=pl&text=${passS.V}")
+                    break@loop
+                }
             }
             Back -> break@loop
         }

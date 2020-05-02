@@ -33,7 +33,9 @@ typealias Bus<T> = PublishRelay<T>
 
 typealias State<T> = BehaviorRelay<T>
 
-fun State<Boolean>.toggle() = this put (value != true)
+val <T> State<T>.V get() = value!!
+
+fun State<Boolean>.toggle() = this put !V
 
 @OptIn(ExperimentalContracts::class)
 inline fun <S, R> State<S>.withS(state: S, block: () -> R): R {
