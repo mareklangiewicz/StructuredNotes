@@ -23,6 +23,7 @@ sealed class HomeAction : MainAction {
     data class ChangeNote(val note: Note) : HomeAction()
     // TODO: MoveNote(oldPos: Int, newPos: Int)
     object StartLogin : HomeAction()
+    object TestCrash : HomeAction()
 }
 
 class HomeState(val commonS: CommonState = CommonState(), val loginS: LoginState = LoginState(commonS)) {
@@ -37,7 +38,8 @@ suspend fun HomeState.logic(
     notesS put Random.fakeNotes() // FIXME
     loop@ while (true) {
         when (val action = actionS.awaitFirst()) {
-            is StartLogin -> loginS.logic(actionS, commandS, notify)
+            StartLogin -> loginS.logic(actionS, commandS, notify)
+            TestCrash -> throw RuntimeException("my test crash")
             is InsertNote -> notesS put
                     notesS.V.slice(0 until action.pos) + action.note + notesS.V.slice(action.pos until notesS.V.size)
             is RemoveNote -> {

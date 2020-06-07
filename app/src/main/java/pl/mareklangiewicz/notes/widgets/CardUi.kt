@@ -1,12 +1,10 @@
 package pl.mareklangiewicz.notes.widgets
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
-import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.core.view.updateLayoutParams
 import splitties.dimensions.dip
@@ -64,15 +62,6 @@ fun View.wrapInCardUi(
     it.strokeColor = strokeColor
 }
 
-fun View.wrapInFrame(
-    width: Int = matchParent,
-    height: Int = matchParent,
-    gravity: Int = FrameLayout.LayoutParams.UNSPECIFIED_GRAVITY,
-    initParams: FrameLayout.LayoutParams.() -> Unit = {}
-) = frameLayout {
-    add(this@wrapInFrame, lParams(width, height, gravity, initParams))
-}
-
 
 @Suppress("unused")
 private class CardUiPreview(ctx: Context, attrs: AttributeSet) : UiBoxFrame(
@@ -81,3 +70,4 @@ private class CardUiPreview(ctx: Context, attrs: AttributeSet) : UiBoxFrame(
         .wrapInFrame { margin = ctx.dip(16) }
         .wrapInCardUi(64, 64, 8)
     , attrs)
+

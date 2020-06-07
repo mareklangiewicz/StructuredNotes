@@ -1,5 +1,7 @@
 plugins {
     id("com.android.application")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
     kotlin("android")
 }
 
@@ -22,4 +24,6 @@ dependencies {
     implementation(project(":logic"))
     implementation(project(":widgets"))
     implementation(Deps.androidxBrowser)
+    implementation(Deps.firebaseAnalytics)
+    implementation(Deps.firebaseCrashlytics)
 }

@@ -148,6 +148,16 @@ fun Ui.progressBar(android: AndroidStyles = AndroidStyles(ctx)) = frameLayout {
     isVisible = false
 }
 
+fun View.wrapInFrame(
+    width: Int = matchParent,
+    height: Int = matchParent,
+    gravity: Int = FrameLayout.LayoutParams.UNSPECIFIED_GRAVITY,
+    initParams: FrameLayout.LayoutParams.() -> Unit = {}
+) = frameLayout {
+    add(this@wrapInFrame, lParams(width, height, gravity, initParams))
+}
+
+
 @SuppressLint("ViewConstructor")
 open class UiFrame(ui: Ui, attrs: AttributeSet?): FrameLayout(ui.ctx, attrs) {
     init { add(ui.root, lParams(matchParent, matchParent)) }

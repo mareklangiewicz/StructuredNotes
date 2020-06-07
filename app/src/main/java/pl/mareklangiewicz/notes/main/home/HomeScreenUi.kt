@@ -16,6 +16,7 @@ import pl.mareklangiewicz.recyclerui.WithId
 import splitties.views.dsl.appcompat.toolbar
 import splitties.views.dsl.core.*
 import splitties.views.dsl.material.MaterialComponentsStyles
+import splitties.views.onClick
 import kotlin.random.Random
 
 class HomeScreenUi(ctx: Context) : ScreenUi<HomeUiContract>(HomeUi(ctx)) {
@@ -26,11 +27,12 @@ class HomeScreenUi(ctx: Context) : ScreenUi<HomeUiContract>(HomeUi(ctx)) {
             notesS.subscribeUntil(untilS) { ui.notes = it }
         }
 
-        Observable.merge(
+        Observable.mergeArray(
             ui.noteChangeS.map { HomeAction.ChangeNote(it) },
             ui.addNoteClickS.map { HomeAction.InsertNote(it) },
             ui.remNoteClickS.map { HomeAction.RemoveNote(it) },
-            ui.loginClickS.map { HomeAction.StartLogin }
+            ui.loginClickS.map { HomeAction.StartLogin },
+            ui.crashClickS.map { HomeAction.TestCrash }
         ).subscribeUntil(untilS, model.actionS)
     }
 }
@@ -41,6 +43,7 @@ interface HomeUiContract : Ui {
     val addNoteClickS: Observable<Int>
     val remNoteClickS: Observable<Long>
     val loginClickS: Observable<Unit>
+    val crashClickS: Observable<Unit>
 }
 
 @Suppress("EXPERIMENTAL_API_USAGE")
@@ -54,6 +57,7 @@ class HomeUi(override val ctx: Context) : HomeUiContract {
 
     // FIXME: move to toolbar
     private val loginButton = material.button.outlined { text = "Login" }.addV(root, 32)
+    private val crashButton = material.button.outlined { text = "Crash" }.addV(root, 32)
 
     private val inputBox = horizontalLayout().addV(root, 32)
 
@@ -74,6 +78,8 @@ class HomeUi(override val ctx: Context) : HomeUiContract {
     override val remNoteClickS: Observable<Long> = Observable.never() // TODO
 
     override val loginClickS = loginButton.clickS
+
+    override val crashClickS = crashButton.clickS
 }
 
 private data class TextItem(val text: String, override val id: Long): WithId
