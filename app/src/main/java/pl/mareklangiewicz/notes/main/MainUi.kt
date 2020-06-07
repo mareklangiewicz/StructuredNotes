@@ -4,6 +4,7 @@ package pl.mareklangiewicz.notes.main
 import android.animation.LayoutTransition
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.AttributeSet
 import io.reactivex.Observable
 import pl.mareklangiewicz.common.subscribeUntil
 import pl.mareklangiewicz.notes.widgets.UiFrame
@@ -59,4 +60,4 @@ class MainUi(override val ctx: Context) : Ui {
     }
 }
 
-@Suppress("unused") private class MainPreview(ctx: Context) : UiFrame(MainUi(ctx))
+@Suppress("unused") private class MainPreview(ctx: Context, attrs: AttributeSet) : UiFrame(MainUi(ctx), attrs)

@@ -1,5 +1,7 @@
 package pl.mareklangiewicz.notes.widgets
 
+import android.annotation.SuppressLint
+import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
@@ -146,6 +148,12 @@ fun Ui.progressBar(android: AndroidStyles = AndroidStyles(ctx)) = frameLayout {
     isVisible = false
 }
 
-open class UiFrame(ui: Ui): FrameLayout(ui.ctx) { init { add(ui.root, lParams(matchParent, matchParent)) } }
+@SuppressLint("ViewConstructor")
+open class UiFrame(ui: Ui, attrs: AttributeSet?): FrameLayout(ui.ctx, attrs) {
+    init { add(ui.root, lParams(matchParent, matchParent)) }
+}
+@SuppressLint("ViewConstructor")
+open class UiBoxFrame(ui: Ui, attrs: AttributeSet?): UiFrame(ui.sandbox { on(-1, -1) lay ui.root }, attrs)
 
-open class UiBoxFrame(ui: Ui): UiFrame(ui.sandbox { on(-1, -1) lay ui.root })
+
+

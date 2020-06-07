@@ -27,4 +27,4 @@ class SplashUi(override val ctx: Context) : Ui {
 private fun LinearLayout.addImage(@DrawableRes res: Int, initView: ImageView.() -> Unit = {}) =
     add(imageView { imageResource = res; padding = dip(16); initView() }, lParams(matchParent, weight = 1f))
 
-@Suppress("unused") private class SplashPreview(ctx: Context) : UiFrame(SplashScreenUi(ctx))
+@Suppress("unused") private class SplashPreview(ctx: Context, attrs: AttributeSet) : UiFrame(SplashScreenUi(ctx), attrs)

@@ -73,4 +73,4 @@ class LoginUi(override val ctx: Context) : LoginUiContract {
     override val loginClickS = loginButton.clickS
 }
 
-@Suppress("unused") private class LoginPreview(ctx: Context) : UiFrame(LoginScreenUi(ctx))
+@Suppress("unused") private class LoginPreview(ctx: Context, attrs: AttributeSet) : UiFrame(LoginScreenUi(ctx), attrs)
