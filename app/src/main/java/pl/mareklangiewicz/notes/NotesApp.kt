@@ -2,6 +2,7 @@ package pl.mareklangiewicz.notes
 
 import android.app.Application
 import android.util.Log
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import pl.mareklangiewicz.common.LogLevel
 import pl.mareklangiewicz.common.Logger
 import pl.mareklangiewicz.common.memoize
@@ -20,5 +21,6 @@ class NotesApp : Application() {
 class AndroLogger : Logger {
     override fun invoke(message: String, level: LogLevel) {
         if (BuildConfig.DEBUG) Log.println(level.nr, "nts", message)
+        if (level > LogLevel.VERBOSE) FirebaseCrashlytics.getInstance().log("nts [${level.nr}] $message")
     }
 }

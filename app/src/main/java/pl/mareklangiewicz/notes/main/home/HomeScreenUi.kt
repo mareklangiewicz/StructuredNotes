@@ -2,7 +2,7 @@ package pl.mareklangiewicz.notes.main.home
 
 import android.content.Context
 import android.util.AttributeSet
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import pl.mareklangiewicz.common.subscribeUntil
 import pl.mareklangiewicz.notes.logic.main.home.HomeAction
 import pl.mareklangiewicz.notes.logic.main.home.Note

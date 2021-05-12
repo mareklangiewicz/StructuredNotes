@@ -4,12 +4,16 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Vers.androidCompileSdk)
+    compileSdk = Vers.androidCompileSdk
+
     defaultConfig {
-        minSdkVersion(Vers.androidMinSdk)
-        targetSdkVersion(Vers.androidTargetSdk)
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = Vers.androidMinSdk
+        targetSdk = Vers.androidTargetSdk
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+        useIR = true
     }
 }
 

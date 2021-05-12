@@ -6,17 +6,17 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Vers.androidCompileSdk)
+    compileSdk = Vers.androidCompileSdk
     defaultConfig {
         applicationId = "pl.mareklangiewicz.notes"
-        minSdkVersion(Vers.androidMinSdk)
-        targetSdkVersion(Vers.androidTargetSdk)
-        versionCode = 2
-        versionName = "0.02"
+        minSdk = Vers.androidMinSdk
+        targetSdk = Vers.androidTargetSdk
+        versionCode = 4
+        versionName = "0.04"
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+    kotlinOptions {
+        jvmTarget = "1.8"
+        useIR = true
     }
 }
 
@@ -24,6 +24,7 @@ dependencies {
     implementation(project(":logic"))
     implementation(project(":widgets"))
     implementation(Deps.androidxBrowser)
-    implementation(Deps.firebaseAnalytics)
-    implementation(Deps.firebaseCrashlytics)
+    implementation(platform(Deps.firebaseAndroidBoM))
+    implementation(Deps.firebaseAnalyticsKtx)
+    implementation(Deps.firebaseCrashlyticsKtx)
 }

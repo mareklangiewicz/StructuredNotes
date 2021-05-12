@@ -1,7 +1,7 @@
 package pl.mareklangiewicz.notes.main
 
 import android.content.Context
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import pl.mareklangiewicz.notes.logic.main.Screen
 import pl.mareklangiewicz.notes.main.home.HomeScreenUi
 import pl.mareklangiewicz.notes.main.login.LoginScreenUi

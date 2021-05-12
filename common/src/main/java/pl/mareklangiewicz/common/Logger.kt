@@ -2,7 +2,7 @@
 
 package pl.mareklangiewicz.common
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import pl.mareklangiewicz.common.LogLevel.*
 
 @Suppress("MagicNumber")

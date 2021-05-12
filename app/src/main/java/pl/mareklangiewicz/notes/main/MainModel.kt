@@ -1,7 +1,7 @@
 package pl.mareklangiewicz.notes.main
 
-import io.reactivex.Observable
-import io.reactivex.functions.Consumer
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.functions.Consumer
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import pl.mareklangiewicz.common.*

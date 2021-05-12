@@ -1,8 +1,8 @@
 package pl.mareklangiewicz.notes.logic.main.home
 
-import io.reactivex.Observable
-import io.reactivex.functions.Consumer
-import kotlinx.coroutines.rx2.awaitFirst
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.functions.Consumer
+import kotlinx.coroutines.rx3.awaitFirst
 import pl.mareklangiewicz.common.V
 import pl.mareklangiewicz.common.createState
 import pl.mareklangiewicz.common.put

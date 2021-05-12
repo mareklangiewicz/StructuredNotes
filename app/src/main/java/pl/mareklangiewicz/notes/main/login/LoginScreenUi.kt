@@ -5,7 +5,7 @@ import pl.mareklangiewicz.notes.main.ScreenUi
 import splitties.views.dsl.core.*
 import splitties.views.dsl.material.MaterialComponentsStyles
 import android.util.AttributeSet
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import pl.mareklangiewicz.common.*
 import pl.mareklangiewicz.notes.logic.main.login.LoginAction.*
 import pl.mareklangiewicz.notes.main.MainModelContract

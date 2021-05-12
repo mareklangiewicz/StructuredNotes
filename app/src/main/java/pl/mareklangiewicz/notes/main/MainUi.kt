@@ -5,7 +5,7 @@ import android.animation.LayoutTransition
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import pl.mareklangiewicz.common.subscribeUntil
 import pl.mareklangiewicz.notes.widgets.UiFrame
 import splitties.views.dsl.core.*

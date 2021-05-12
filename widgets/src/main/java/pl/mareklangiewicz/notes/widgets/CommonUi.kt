@@ -11,10 +11,10 @@ import androidx.annotation.StringRes
 import androidx.core.text.parseAsHtml
 import androidx.core.text.toHtml
 import androidx.core.view.isVisible
-import com.jakewharton.rxbinding3.view.clicks
-import com.jakewharton.rxbinding3.widget.textChanges
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.jakewharton.rxbinding4.view.clicks
+import com.jakewharton.rxbinding4.widget.textChanges
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import pl.mareklangiewicz.common.unsupportedGet
 import pl.mareklangiewicz.sandboxui.sandbox
 import splitties.dimensions.dip
@@ -124,7 +124,7 @@ var EditText.errRes: Int?
 
 
 fun Ui.dip(value: Int) = ctx.dip(value)
-fun Ui.dp(value: Int) = ctx.dp(value)
+fun Ui.dp(value: Int) = ctx.dp(value).toFloat()
 
 fun <T> Observable<T>.debounceUi(delayMs: Int = 200): Observable<T> =
     debounce(delayMs.toLong(), TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())

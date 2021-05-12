@@ -1,6 +1,6 @@
 package pl.mareklangiewicz.common
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 data class Optional<out T>(val value: T?)
 
