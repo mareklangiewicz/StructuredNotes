@@ -15,7 +15,7 @@ defaultBuildTemplateForRootProject(
         name = "StructuredNotes",
         description = "Structured Notes",
         githubUrl = "https://github.com/mareklangiewicz/StructuredNotes",
-        version = Ver(0, 1, 1),
+        version = Ver(0, 1, 2),
         // https://s01.oss.sonatype.org/content/repositories/releases/pl/mareklangiewicz/structurednotes/
         // https://github.com/mareklangiewicz/StructuredNotes/releases
         settings = LibSettings(
@@ -30,7 +30,7 @@ defaultBuildTemplateForRootProject(
 //   but as normal sync when syncing all regions in all projects.
 //   The "self-sync" should only sync templates (and be renamed to templates-sync or sth)
 
-// region [Root Build Template]
+// region [[Root Build Template]]
 
 /** Publishing to Sonatype OSSRH has to be explicitly allowed here, by setting withSonatypeOssPublishing to true. */
 fun Project.defaultBuildTemplateForRootProject(details: LibDetails? = null) {
@@ -78,4 +78,4 @@ fun Project.defaultSonatypeOssNexusPublishing(
   }
 }
 
-// endregion [Root Build Template]
+// endregion [[Root Build Template]]
